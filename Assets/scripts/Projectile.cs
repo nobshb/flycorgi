@@ -5,7 +5,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour {
 
     public float moveSpeed = 5f;
-    public float maxX = 100f; 
+    public float maxX = 10f; 
 
     // Use this for initialization
     void Start () {
