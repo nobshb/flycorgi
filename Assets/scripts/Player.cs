@@ -9,9 +9,12 @@ public class Player: MonoBehaviour
     public float upForce;
     private bool isDead = false;
 
+    public float moveSpeed = 10f;
+
+    public KeyCode rightKey = KeyCode.RightArrow;
+    public KeyCode leftKey = KeyCode.LeftArrow;
+
     public KeyCode fireKey = KeyCode.Space;
-    //public KeyCode upKey = KeyCode.W;
-    //public KeyCode downKey = KeyCode.S;
 
     public GameObject proj;
 
@@ -31,6 +34,15 @@ public class Player: MonoBehaviour
                 rb2d.velocity = Vector2.zero;
                 rb2d.AddForce(new Vector2(0, upForce));
             }
+
+            if (Input.GetKey(rightKey))
+            {
+                transform.Translate(moveSpeed * Time.deltaTime, 0, 0);
+            }
+            if (Input.GetKey(leftKey))
+            {
+                transform.Translate(-moveSpeed * Time.deltaTime, 0, 0);
+            }
         }
 
             if (Input.GetMouseButtonDown(0))
@@ -45,5 +57,10 @@ public class Player: MonoBehaviour
         rb2d.velocity = Vector2.zero;
         isDead = true;
         GameManager.instance.PlayerDied();
+
+        if (other.gameObject.tag == "Bad")
+        {
+            GameManager.instance.PlayerDied();
+        }
     }
 }

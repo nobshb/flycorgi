@@ -11,7 +11,7 @@ public class GameManager: MonoBehaviour
     public Text scoreText;                    
     public GameObject gameOvertext;             
 
-    private int score = 0;
+    public int score = 0;
     public int highScore = 0;
 
     public bool gameOver = false;
@@ -61,7 +61,7 @@ public class GameManager: MonoBehaviour
         gameOvertext.SetActive(true);
         gameOver = true;
     }
-    public void endGame()
+    public void EndGame()
     {
         if (score > highScore)
         {
