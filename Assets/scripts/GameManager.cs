@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
 using UnityEngine.SceneManagement;
 
 public class GameManager: MonoBehaviour
 {
-    public static GameManager instance;         
+    public static GameManager instance = null;         
     public Text scoreText;                    
     public GameObject gameOvertext;             
 
-    private int score = 0;                      
+    private int score = 0;
+    public int highScore = 0;
+
     public bool gameOver = false;
     public float scrollSpeed = -1.5f;
 
@@ -19,15 +22,26 @@ public class GameManager: MonoBehaviour
     void Awake()
     {
         if (instance == null)
+        {
             instance = this;
-        else if (instance != this)
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
             Destroy(gameObject);
+            return;
+        }
+
+        string fullFilePath = Application.persistentDataPath + Path.DirectorySeparatorChar + "SaveData.txt";
+        if (File.Exists(fullFilePath))
+        {
+            string highScoreString = File.ReadAllText(fullFilePath);
+            highScore = int.Parse(highScoreString);
+        }
     }
 
     void Update()
     {
-
-
         if (Input.GetKey(restartKey))
         {
             SceneManager.LoadScene("main");
@@ -46,5 +60,16 @@ public class GameManager: MonoBehaviour
     {
         gameOvertext.SetActive(true);
         gameOver = true;
+    }
+    public void endGame()
+    {
+        if (score > highScore)
+        {
+            highScore = score;
+
+            string fullFilePath = Application.dataPath + Path.DirectorySeparatorChar + "SaveData.txt";
+            File.WriteAllText(fullFilePath, highScore.ToString());
+        }
+        SceneManager.LoadScene("GameOverScene");
     }
 }
