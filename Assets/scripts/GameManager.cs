@@ -9,7 +9,7 @@ public class GameManager: MonoBehaviour
 {
     public static GameManager instance = null;         
     public Text scoreText;                    
-    public GameObject gameOvertext;             
+    //public GameObject gameOvertext;             
 
     public int score = 0;
     public int highScore = 0;
@@ -19,25 +19,31 @@ public class GameManager: MonoBehaviour
 
     public KeyCode restartKey = KeyCode.R;
 
-    void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
+    //void Awake()
+    //{
+    //    if (instance == null)
+    //    {
+    //        instance = this;
+    //        DontDestroyOnLoad(gameObject);
+    //    }
+    //    else
+    //    {
+    //        Destroy(gameObject);
+    //        return;
+    //    }
 
-        string fullFilePath = Application.persistentDataPath + Path.DirectorySeparatorChar + "SaveData.txt";
-        if (File.Exists(fullFilePath))
-        {
-            string highScoreString = File.ReadAllText(fullFilePath);
-            highScore = int.Parse(highScoreString);
-        }
+    //    string fullFilePath = Application.persistentDataPath + Path.DirectorySeparatorChar + "SaveData.txt";
+    //    if (File.Exists(fullFilePath))
+    //    {
+    //        string highScoreString = File.ReadAllText(fullFilePath);
+    //        highScore = int.Parse(highScoreString);
+    //    }
+    //}
+
+    private void Start()
+    {
+        //gameOvertext = GameObject.Find("GameOverText");
+        //gameOvertext.SetActive(false);
     }
 
     void Update()
@@ -48,28 +54,34 @@ public class GameManager: MonoBehaviour
         }
     }
 
-    public void PlayerScored()
-    {
-        if (gameOver)
-            return;
-        score++;
-        scoreText.text = "Score: " + score.ToString();
-    }
+    //public void PlayerScored()
+    //{
+    //    if (gameOver)
+    //        return;
+    //    score++;
+    //    scoreText.text = "Score: " + score.ToString();
+    //}
 
     public void PlayerDied()
     {
-        gameOvertext.SetActive(true);
+        //gameOvertext.SetActive(true);
         gameOver = true;
+        //SceneManager.LoadScene("GameOverScene");
+        Invoke("Restart", 2);
     }
-    public void EndGame()
-    {
-        if (score > highScore)
-        {
-            highScore = score;
+    //public void EndGame()
+    //{
+    //    if (score > highScore)
+    //    {
+    //        highScore = score;
 
-            string fullFilePath = Application.dataPath + Path.DirectorySeparatorChar + "SaveData.txt";
-            File.WriteAllText(fullFilePath, highScore.ToString());
-        }
-        SceneManager.LoadScene("GameOverScene");
+    //        string fullFilePath = Application.dataPath + Path.DirectorySeparatorChar + "SaveData.txt";
+    //        File.WriteAllText(fullFilePath, highScore.ToString());
+    //    }
+    //    //SceneManager.LoadScene("GameOverScene");
+    //}
+
+    private void Restart(){
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

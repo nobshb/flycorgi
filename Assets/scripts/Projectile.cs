@@ -5,7 +5,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour {
 
     public float moveSpeed = 5f;
-    public float maxX = 10f; 
+    public float maxY = 10f; 
 
     // Use this for initialization
     void Start () {
@@ -16,7 +16,7 @@ public class Projectile : MonoBehaviour {
 	void Update () {
         transform.Translate(moveSpeed * Time.deltaTime, 0, 0);
 
-        if (transform.position.x > maxX)
+        if (transform.position.y > maxY)
         {
             Destroy(gameObject);
         }
